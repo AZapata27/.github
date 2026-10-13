@@ -1,0 +1,93 @@
+{
+  "owner": "AZapata27",
+  "repos": [
+    {
+      "name": "reusable-workflows",
+      "default_branch": "main",
+      "release_tags": true,
+      "required_checks": [
+        "Workflow lint / actionlint",
+        "Workflow lint / zizmor",
+        "Fixture / Gradle / Gradle build --no-daemon (tests/fixtures/gradle-app, JDK 21)",
+        "Fixture / Maven / Maven -B verify (tests/fixtures/maven-app, JDK 21)",
+        "Fixture / Node / Node (tests/fixtures/node-app)",
+        "Verify reusable workflow outputs",
+        "Security / Dependency review"
+      ]
+    },
+    {
+      "name": "colombian-holidays-toolkit",
+      "default_branch": "master",
+      "required_checks": [
+        "workflow-lint / actionlint",
+        "workflow-lint / zizmor",
+        "build / Gradle build --no-daemon (., JDK 21)",
+        "security / Dependency review"
+      ]
+    },
+    {
+      "name": "movie-recommendation-system",
+      "default_branch": "master",
+      "required_checks": [
+        "workflow-lint / actionlint",
+        "workflow-lint / zizmor",
+        "build / Gradle build (., JDK 21)",
+        "security / Dependency review"
+      ]
+    },
+    {
+      "name": "ai-integration-springai",
+      "default_branch": "master",
+      "required_checks": [
+        "Workflow lint / actionlint",
+        "Workflow lint / zizmor",
+        "Backend (Maven verify) / Maven -B verify (., JDK 21)",
+        "Frontend (Angular build) / Node (frontend)",
+        "Security / Dependency review"
+      ]
+    },
+    {
+      "name": "grpc-examples",
+      "default_branch": "master",
+      "required_checks": [
+        "workflow-lint / actionlint",
+        "workflow-lint / zizmor",
+        "security / Dependency review",
+        "client-grpc-spring-boot / Maven -B verify (client-grpc-spring-boot, JDK 21)",
+        "cloud-eureka-server / Maven -B verify (cloud-eureka-server, JDK 21)",
+        "server-client-grpc-quarkus / Maven -B verify (server-client-grpc-quarkus, JDK 21)",
+        "server-grpc-spring-boot / Maven -B verify (server-grpc-spring-boot, JDK 21)"
+      ]
+    },
+    {
+      "name": "SyncroBoard-Tasks-System",
+      "default_branch": "master",
+      "required_checks": [
+        "Workflow lint / actionlint",
+        "Workflow lint / zizmor",
+        "Lint, typecheck, test & build / Node (.)",
+        "Security / Dependency review"
+      ]
+    },
+    {
+      "name": "graalvm-spring-quarkus-benchmark-lab",
+      "default_branch": "master",
+      "required_checks": [
+        "workflow-lint / actionlint",
+        "workflow-lint / zizmor",
+        "security / Dependency review",
+        "quarkus-native (JVM) / Gradle build --no-daemon (quarkus-native, JDK 21)",
+        "quarkus-reactive-native (JVM) / Gradle build --no-daemon (quarkus-reactive-native, JDK 21)",
+        "spring-native (JVM) / Gradle build --no-daemon (spring-native, JDK 21)",
+        "spring-webflux-native (JVM) / Gradle build --no-daemon (spring-webflux-native, JDK 21)"
+      ]
+    },
+    {
+      "name": ".github",
+      "default_branch": "main",
+      "protect_default_branch": false,
+      "note": "Ruleset enabled once its own CI has produced real check names.",
+      "required_checks": []
+    }
+  ]
+}
