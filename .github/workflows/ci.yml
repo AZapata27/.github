@@ -1,0 +1,53 @@
+# CI for this repository: lint the workflows, validate the policy files (no network) and
+# run dependency review + CodeQL. The weekly schedule refreshes CodeQL with the latest queries.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: '17 6 * * 1'          # weekly, Monday 06:17 UTC
+
+permissions: {}
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  workflow-lint:
+    name: Workflow lint
+    uses: AZapata27/reusable-workflows/.github/workflows/workflow-lint.yml@dd1bf38000c4f44c4939abe2ce0da8e1fac11993 # v1.0.0
+    permissions:
+      contents: read
+
+  validate:
+    name: Validate policies
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - name: Harden runner
+        uses: step-security/harden-runner@ccd8616d44fd3846e67624a50d5aad6d37bf2d25 # v2.22.1
+        with:
+          egress-policy: audit
+
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Validate policy files
+        run: python3 -I scripts/policy.py validate
+
+  security:
+    name: Security
+    uses: AZapata27/reusable-workflows/.github/workflows/security.yml@dd1bf38000c4f44c4939abe2ce0da8e1fac11993 # v1.0.0
+    permissions:
+      contents: read
+      actions: read              # CodeQL (required even when skipped)
+      security-events: write     # CodeQL SARIF upload
+    with:
+      codeql-languages: '["actions", "python"]'

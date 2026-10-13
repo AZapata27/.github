@@ -1,0 +1,39 @@
+# Weekly drift audit of the governed repositories using only the read-only GITHUB_TOKEN.
+# Scope "public": rulesets (without bypass actors) and the rules active on each default
+# branch. Actions permissions and security_and_analysis need repository admin, so they are
+# audited by running `python -I scripts/policy.py plan` locally as the owner (see README).
+name: Policy audit
+
+on:
+  schedule:
+    - cron: '41 7 * * 1'          # weekly, Monday 07:41 UTC
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: policy-audit
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    name: Audit rulesets (public scope)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - name: Harden runner
+        uses: step-security/harden-runner@ccd8616d44fd3846e67624a50d5aad6d37bf2d25 # v2.22.1
+        with:
+          egress-policy: audit
+
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Audit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 -I scripts/policy.py audit --scope public
