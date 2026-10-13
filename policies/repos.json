@@ -85,9 +85,12 @@
     {
       "name": ".github",
       "default_branch": "main",
-      "protect_default_branch": false,
-      "note": "Ruleset enabled once its own CI has produced real check names.",
-      "required_checks": []
+      "required_checks": [
+        "Workflow lint / actionlint",
+        "Workflow lint / zizmor",
+        "Validate policies",
+        "Security / Dependency review"
+      ]
     }
   ]
 }
