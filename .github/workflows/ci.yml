@@ -18,7 +18,7 @@ concurrency:
 jobs:
   workflow-lint:
     name: Workflow lint
-    uses: AZapata27/reusable-workflows/.github/workflows/workflow-lint.yml@dd1bf38000c4f44c4939abe2ce0da8e1fac11993 # v1.0.0
+    uses: AZapata27/reusable-workflows/.github/workflows/workflow-lint.yml@1f72ba8c03929704ea446e9df6a80ceb23675d51 # v1.0.1
     permissions:
       contents: read
 
@@ -30,7 +30,7 @@ jobs:
       contents: read
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@ccd8616d44fd3846e67624a50d5aad6d37bf2d25 # v2.22.1
+        uses: step-security/harden-runner@dc2769abcc0fcfbadfc1df54081c1608579ef6b2 # v2.22.2
         with:
           egress-policy: audit
 
@@ -44,7 +44,7 @@ jobs:
 
   security:
     name: Security
-    uses: AZapata27/reusable-workflows/.github/workflows/security.yml@dd1bf38000c4f44c4939abe2ce0da8e1fac11993 # v1.0.0
+    uses: AZapata27/reusable-workflows/.github/workflows/security.yml@1f72ba8c03929704ea446e9df6a80ceb23675d51 # v1.0.1
     permissions:
       contents: read
       actions: read              # CodeQL (required even when skipped)
